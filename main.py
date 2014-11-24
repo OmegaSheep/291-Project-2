@@ -47,27 +47,60 @@ def main():
     #print(arg)
     #gets last word of argument string (it should be hash or betree
     arg = arg.rsplit(None,1)[-1]
-  
+
     #TODO actually use these args
     #argument handleing
     if arg == "btree" or arg == "1":
            #db_type_option = "btree"
         print("chosen btree")
+        db_type_option = "btree" 
+     
     elif arg == "hash" or arg == "2":
         print("choosen hash")
+        db_type_option = "hash"  
+    
     elif arg == "indexfile" or arg == "3" :
         print("choosen indexfile")
+        db_type_option = "indexfile"
     else:
         print("please use the option btree, hash or indexfile")
         sys.exit()
-         
+       
 
-    #Trys to open a database, if cant find, it will create it
-    try:
-        db = bsddb.btopen(DA_FILE, "w")
-    except:
-        print("DB doesn't exist, creating a new one")
-        db = bsddb.btopen(DA_FILE, "c")
+    if db_type_option == "btree":
+       
+        #Trys to open a database, if cant find, it will create it
+        try:
+            db = bsddb.btopen(DA_FILE, "w")
+        except:
+            print("DB doesn't exist, creating a new one")
+            db = bsddb.btopen(DA_FILE, "c")
+    #TODO fix unexpected filetype bug
+    elif db_type_option == "hash":
+        #Trys to open a database, if cant find, it will create it
+        try:
+            db = bsddb.hashopen(DA_FILE, "w")
+        except:
+            print("DB doesn't exist, creating a new one")
+            db = bsddb.hashopen(DA_FILE, "c")
+
+    #TODO impliment this
+    elif db_type_option == "indexfile":
+        #Trys to open a database, if cant find, it will create it
+        print("Impliment meeee!")
+        try:
+            db = bsddb.btopen(DA_FILE, "w")
+        except:
+            print("DB doesn't exist, creating a new one")
+            db = bsddb.btopen(DA_FILE, "c")
+    else:
+        print("LOL you shouldent be here")
+        try:
+            db = bsddb.btopen(DA_FILE, "w")
+        except:
+            print("DB doesn't exist, creating a new one")
+            db = bsddb.btopen(DA_FILE, "c")
+
     random.seed(SEED)
 
     #fills the database with stuff
