@@ -1,5 +1,7 @@
 # Berkeley DB Example
 
+import sys, getopt
+
 import bsddb3 as bsddb
 import random
 # Make sure you run "mkdir /tmp/my_db" first!
@@ -29,7 +31,6 @@ def generate_value():
     value = value.encode(encoding='UTF-8')
     return value
 
-#TODO needs testing
 def retrieve_pair(db, key):
     try:
         Name = db[key]
@@ -41,6 +42,26 @@ def retrieve_pair(db, key):
         return name
 
 def main():
+    
+    arg = "\n".join(sys.argv)
+    #print(arg)
+    #gets last word of argument string (it should be hash or betree
+    arg = arg.rsplit(None,1)[-1]
+  
+    #TODO actually use these args
+    #argument handleing
+    if arg == "btree" or arg == "1":
+           #db_type_option = "btree"
+        print("chosen btree")
+    elif arg == "hash" or arg == "2":
+        print("choosen hash")
+    elif arg == "indexfile" or arg == "3" :
+        print("choosen indexfile")
+    else:
+        print("please use the option btree, hash or indexfile")
+        sys.exit()
+         
+
     #Trys to open a database, if cant find, it will create it
     try:
         db = bsddb.btopen(DA_FILE, "w")
