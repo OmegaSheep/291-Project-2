@@ -41,7 +41,29 @@ def generate_value():
     value = value.encode(encoding='UTF-8')
     return value
 
-def retrieve_pair(db, key):
+def retrieve_pair_key(db, key):
+    try:
+        Name = db[key]
+        
+    except:
+        print (key + ", does not exist!")
+    if db.has_key(key) == True:
+        name = db[key]
+        return name
+    
+def retrieve_pair_data(db, data):
+    results = []
+    try:
+        for i in range(DB_SIZE):
+            if (db.has_key(i) == True):
+                if (db[i] == data):
+                    results.append(i)
+        return results
+    except Exception as e:
+        print (e)
+
+
+def retrieve_pair_range(db, lower, upper):
     try:
         Name = db[key]
         
@@ -132,7 +154,7 @@ def main():
             if (opt == '1'):
                 key = input("Please enter key value: \n")
                 try:
-                    result = retrieve_pair(db, key)
+                    result = retrieve_pair_key(db, key)
                     print("Result Found:",result)
                 except Exception as e:
                     print(e)
@@ -140,8 +162,9 @@ def main():
             elif (opt == '2'):
                 data = input("Please enter data value: \n")
                 try:
-                    result = retrieve_pair(db, key)
-                    print("Result Found:",result)
+                    result = retrieve_pair_data(db, data)
+                    print("Result List for Data Value:",data)
+                    print(result)
                 except Exception as e:
                     print(e)                
     
@@ -149,6 +172,11 @@ def main():
                 lower = input("Please enter lower bound: \n")
                 upper = input("Please enter upper bound: \n")
                 assert(lower <= upper)
+                try:
+                    result = retrieve_pair_range(db, data)
+                    print("Result Found:",result)
+                except Exception as e:
+                    print(e)                      
                 
             elif (opt == '4'):
                 print("Exiting database application. . .")
@@ -162,7 +190,7 @@ def main():
     #test_key = "123"
     #test_key = test_key.encode(encoding='UTF-8')
     #db[test_key] = "found me!" 
-    #print(retrieve_pair(db, test_key))
+    #print(retrieve_pair_key(db, test_key))
 
     try:
         db.close()
