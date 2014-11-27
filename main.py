@@ -43,7 +43,7 @@ def generate_value():
 
 def retrieve_pair_key(db, key):
     try:
-        Name = db[key]
+        name = db[key]
         
     except:
         print (key + ", does not exist!")
@@ -64,14 +64,16 @@ def retrieve_pair_data(db, data):
 
 
 def retrieve_pair_range(db, lower, upper):
+    results = []
     try:
-        Name = db[key]
-        
-    except:
-        print (key + ", does not exist!")
-    if db.has_key(key) == True:
-        name = db[key]
-        return name
+        assert(upper <= DB_SIZE)
+        for i in range(lower, upper):
+            if (db.has_key(i) == True):
+                if (db[i] == data):
+                    results.append(i)
+        return results
+    except Exception as e:
+        print (e)
 
 def main():
     
@@ -82,6 +84,7 @@ def main():
 
     #TODO actually use these args
     #argument handleing
+    os.system('clear')
     if (arg == "btree" or arg == "1"):
            #db_type_option = "btree"
         print("Chosen DB_BTREE.")
@@ -136,9 +139,9 @@ def main():
     for index in range(DB_SIZE):
         key = generate_key()
         value = generate_value()
-        #print (key)
-        #print (value)
-        #print ("")
+        print (key)
+        print (value)
+        print ("")
         db[key] = value
         
         while (1):  
@@ -152,17 +155,19 @@ def main():
             os.system('clear')
             
             if (opt == '1'):
-                key = input("Please enter key value: \n")
+                key = int(input("Please enter key value: \n"))
+                #key = key.encode(encoding='UTF-8')
                 try:
                     result = retrieve_pair_key(db, key)
-                    print("Result Found:",result)
+                    print("Result Found: "+str(result))
                 except Exception as e:
                     print(e)
                 
             elif (opt == '2'):
-                data = input("Please enter data value: \n")
+                data = str(input("Please enter data value: \n"))
+                data = data.encode(encoding='UTF-8')                
                 try:
-                    result = retrieve_pair_data(db, data)
+                    result = retrieve_pair_data(db, int(data))
                     print("Result List for Data Value:",data)
                     print(result)
                 except Exception as e:
@@ -173,14 +178,13 @@ def main():
                 upper = input("Please enter upper bound: \n")
                 assert(lower <= upper)
                 try:
-                    result = retrieve_pair_range(db, data)
+                    result = retrieve_pair_range(db, lower, upper)
                     print("Result Found:",result)
                 except Exception as e:
                     print(e)                      
                 
             elif (opt == '4'):
-                print("Exiting database application. . .")
-                break
+                sys.exit("Exiting database application. . .")
                 
             else:
                 os.system('clear')
