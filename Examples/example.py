@@ -1,7 +1,7 @@
 # Berkeley DB Example
 
-__author__ = "Bing Xu"
-__email__ = "bx3@ualberta.ca"
+__author__ = "Aedan Burnett & Thomas Curnow"
+__email__ = "aedan@ualberta.ca & curnow@ualberta.ca"
 
 import bsddb3 as bsddb
 import random

@@ -1,16 +1,26 @@
 # Berkeley DB Example
 
 import sys, getopt
-
+import os
 import bsddb3 as bsddb
 import random
-# Make sure you run "mkdir /tmp/my_db" first!
-DA_FILE = "/tmp/my_db/sample_db"
+
+#Makes directory if it does not exist.
+directory = "/tmp/my_db"
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
+#Assignment spec files.
+DA_FILE1 = "/tmp/my_db/DB_TREE"
+DA_FILE2 = "/tmp/my_db/DB_HASH"
+DA_FILE3 = "/tmp/my_db/DB_IndexFile"
+#Test file.
 DB_SIZE = 1000
 SEED = 10000000
 
 def get_random():
     return random.randint(0, 63)
+
 def get_random_char():
     return chr(97 + random.randint(0, 25))
 
@@ -36,7 +46,7 @@ def retrieve_pair(db, key):
         Name = db[key]
         
     except:
-        print (key + "Not exist!")
+        print (key + ", does not exist!")
     if db.has_key(key) == True:
         name = db[key]
         return name
@@ -50,55 +60,52 @@ def main():
 
     #TODO actually use these args
     #argument handleing
-    if arg == "btree" or arg == "1":
+    if (arg == "btree" or arg == "1"):
            #db_type_option = "btree"
-        print("chosen btree")
+        print("Chosen DB_BTREE.")
         db_type_option = "btree" 
      
-    elif arg == "hash" or arg == "2":
-        print("choosen hash")
+    elif (arg == "hash" or arg == "2"):
+        print("Chosen DB_HASH.")
         db_type_option = "hash"  
     
-    elif arg == "indexfile" or arg == "3" :
-        print("choosen indexfile")
+    elif (arg == "indexfile" or arg == "3"):
+        print("Chosen IndexFile.")
         db_type_option = "indexfile"
     else:
-        print("please use the option btree, hash or indexfile")
+        print("Please use the option 'btree', 'hash' or 'indexfile'.")
         sys.exit()
        
-
     if db_type_option == "btree":
        
         #Trys to open a database, if cant find, it will create it
         try:
-            db = bsddb.btopen(DA_FILE, "w")
+            db = bsddb.btopen(DA_FILE1, "w")
         except:
-            print("DB doesn't exist, creating a new one")
-            db = bsddb.btopen(DA_FILE, "c")
-    #TODO fix unexpected filetype bug
+            print("DB doesn't exist, creating a new one.")
+            db = bsddb.btopen(DA_FILE1, "c")
+            
     elif db_type_option == "hash":
-        #Trys to open a database, if cant find, it will create it
         try:
-            db = bsddb.hashopen(DA_FILE, "w")
+            db = bsddb.hashopen(DA_FILE2, "w")
         except:
-            print("DB doesn't exist, creating a new one")
-            db = bsddb.hashopen(DA_FILE, "c")
-
-    #TODO impliment this
+            print("DB doesn't exist, creating a new one.")
+            db = bsddb.hashopen(DA_FILE2, "c")
+            
     elif db_type_option == "indexfile":
-        #Trys to open a database, if cant find, it will create it
-        print("Impliment meeee!")
         try:
-            db = bsddb.btopen(DA_FILE, "w")
+            db = bsddb.rnopen(DA_FILE, "w")
         except:
-            print("DB doesn't exist, creating a new one")
-            db = bsddb.btopen(DA_FILE, "c")
+            print("DB doesn't exist, creating a new one.")
+            db = bsddb.rnopen(DA_FILE, "c")
+            
     else:
-        print("LOL you shouldent be here")
+        print("LOL you shouldn't be here.")
+        assert("You shall not pass." == potato)
         try:
             db = bsddb.btopen(DA_FILE, "w")
         except:
-            print("DB doesn't exist, creating a new one")
+            print("DB doesn't exist, creating a new one.")
             db = bsddb.btopen(DA_FILE, "c")
 
     random.seed(SEED)
@@ -107,17 +114,55 @@ def main():
     for index in range(DB_SIZE):
         key = generate_key()
         value = generate_value()
-
         #print (key)
         #print (value)
         #print ("")
         db[key] = value
-
+        
+        while (1):  
+            print("Please press the corresponding number to select option.")
+            print("[1]: Retrieve a record with a given key value.") 
+            print("[2]: Retrieve a list of records with a given data value.")
+            print("[3]: Retrieve a list of records with a given range of key values.")
+            print("[4]: Exit. ")            
+                  
+            opt = str(input("Input: \n"))
+            os.system('clear')
+            
+            if (opt == '1'):
+                key = input("Please enter key value: \n")
+                try:
+                    result = retrieve_pair(db, key)
+                    print("Result Found:",result)
+                except Exception as e:
+                    print(e)
+                
+            elif (opt == '2'):
+                data = input("Please enter data value: \n")
+                try:
+                    result = retrieve_pair(db, key)
+                    print("Result Found:",result)
+                except Exception as e:
+                    print(e)                
+    
+            elif (opt == '3'):
+                lower = input("Please enter lower bound: \n")
+                upper = input("Please enter upper bound: \n")
+                assert(lower <= upper)
+                
+            elif (opt == '4'):
+                print("Exiting database application. . .")
+                break
+                
+            else:
+                os.system('clear')
+                print("Sorry " + opt + " is not a known option. \n")   
+                
     #inserts and finds a specific value
-    test_key = "123"
-    test_key = test_key.encode(encoding='UTF-8')
-    db[test_key] = "found me!" 
-    print(retrieve_pair(db, test_key))
+    #test_key = "123"
+    #test_key = test_key.encode(encoding='UTF-8')
+    #db[test_key] = "found me!" 
+    #print(retrieve_pair(db, test_key))
 
     try:
         db.close()
