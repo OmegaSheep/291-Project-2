@@ -77,12 +77,17 @@ def retrieve_pair_data(db, data):
 
 def retrieve_pair_range(db, lower, upper):
     results = []
+    lower = int(lower)
+    upper = int(upper)
     try:
-        assert(upper <= DB_SIZE)
+        #assert(upper <= DB_SIZE)
         for i in range(lower, upper):
-            if (db.has_key(i) == True):
-                if (db[i] == data):
-                    results.append(i)
+            key = str(i)
+            key = key.encode(encoding='UTF-8')
+            if (db.has_key(key) == True):
+                #print("hi")
+                #if (db[i] == data):
+                results.append((key,db[key]))
         return results
     except Exception as e:
         print (e)
