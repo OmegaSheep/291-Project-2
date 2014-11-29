@@ -42,16 +42,24 @@ def generate_value():
     return value
 
 def retrieve_pair_key(db, key):
+    #print("hello")
+    key = key.encode(encoding='UTF-8')
+    #key =
     try:
+        #print (key,type(key))
         name = db[key]
+        return name
         
     except:
         print (key + ", does not exist!")
-    if db.has_key(key) == True:
-        name = db[key]
-        return name
+
+    #if db.has_key(key) == True:
+    #    name = db[key]
+    #    name = str(name)
+    #    return name
     
 def retrieve_pair_data(db, data):
+    data = data.encode(encoding='UTF-8') 
     results = []
     try:
         for i in range(DB_SIZE):
@@ -170,8 +178,8 @@ def main():
         os.system('clear')
             
         if (opt == '1'):
-            key = int(input("Please enter key value: \n"))
-            #key = key.encode(encoding='UTF-8')
+            key = str(input("Please enter key value: \n"))
+
             try:
                 result = retrieve_pair_key(db, key)
                 print("Result Found: "+str(result))
@@ -180,7 +188,7 @@ def main():
                 
         elif (opt == '2'):
             data = str(input("Please enter data value: \n"))
-            data = data.encode(encoding='UTF-8') 
+            #data = data.encode(encoding='UTF-8') 
             try:
                 result = retrieve_pair_data(db, data)
                 print("Result List for Data Value:",data)
