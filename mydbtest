@@ -1,0 +1,18 @@
+#!/bin/bash
+# Pythong shell script
+
+
+if [ "$1" = "btree" ]; then
+    echo "Selected btree db test"
+    python3 main.py btree
+elif [ "$1" = "hash" ]; then
+    echo "Selected hash db test"
+    python3 main.py hash
+elif [ "$1" = "indexfile" ]; then
+    echo "Selected indexfile db test"
+    python3 main.py indexfile
+else
+    echo "Please add an option btree, hash or indexfile"
+fi
+
+

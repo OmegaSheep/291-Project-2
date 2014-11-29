@@ -1,0 +1,10 @@
+If you want to run using the shell script, enter in the terminal:
+chmod 755 mydbtest
+
+Then you can choose one of the three options:
+(1) ./mydbtest btree
+(2) ./mydbtest hash
+(3) ./mydbtest indexfile
+
+If you dont want to use shell you can simply use the command:
+python3 main.py db_type_option
