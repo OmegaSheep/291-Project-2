@@ -55,9 +55,13 @@ def retrieve_pair_data(db, data):
     results = []
     try:
         for i in range(DB_SIZE):
-            if (db.has_key(i) == True):
-                if (db[i] == data):
-                    results.append(i)
+            #print(i)
+            key = str(i)
+            key = key.encode(encoding='UTF-8') 
+            if (db.has_key(key) == True):
+                if (db[key] == data):
+                    results.append((i,data))
+                    1+1
         return results
     except Exception as e:
         print (e)
@@ -143,52 +147,69 @@ def main():
         print (value)
         print ("")
         db[key] = value
-        
-        while (1):  
-            print("Please press the corresponding number to select option.")
-            print("[1]: Retrieve a record with a given key value.") 
-            print("[2]: Retrieve a list of records with a given data value.")
-            print("[3]: Retrieve a list of records with a given range of key values.")
-            print("[4]: Exit. ")            
+
+
+    #inserts and finds a specific value
+    test_key = "125"
+    test_key = test_key.encode(encoding='UTF-8')
+    db[test_key] = "found me!" 
+    #print(retrieve_pair_key(db, test_key))
+
+    test_key = "124"
+    test_key = test_key.encode(encoding='UTF-8')
+    db[test_key] = "found me!"
+ 
+    while (1):  
+        print("Please press the corresponding number to select option.")
+        print("[1]: Retrieve a record with a given key value.") 
+        print("[2]: Retrieve a list of records with a given data value.")
+        print("[3]: Retrieve a list of records with a given range of key values.")
+        print("[4]: Exit. ")            
                   
-            opt = str(input("Input: \n"))
-            os.system('clear')
+        opt = str(input("Input: \n"))
+        os.system('clear')
             
-            if (opt == '1'):
-                key = int(input("Please enter key value: \n"))
-                #key = key.encode(encoding='UTF-8')
-                try:
-                    result = retrieve_pair_key(db, key)
-                    print("Result Found: "+str(result))
-                except Exception as e:
-                    print(e)
+        if (opt == '1'):
+            key = int(input("Please enter key value: \n"))
+            #key = key.encode(encoding='UTF-8')
+            try:
+                result = retrieve_pair_key(db, key)
+                print("Result Found: "+str(result))
+            except Exception as e:
+                print(e)
                 
-            elif (opt == '2'):
-                data = str(input("Please enter data value: \n"))
-                data = data.encode(encoding='UTF-8')                
-                try:
-                    result = retrieve_pair_data(db, int(data))
-                    print("Result List for Data Value:",data)
-                    print(result)
-                except Exception as e:
-                    print(e)                
+        elif (opt == '2'):
+            data = str(input("Please enter data value: \n"))
+            data = data.encode(encoding='UTF-8') 
+            try:
+                result = retrieve_pair_data(db, data)
+                print("Result List for Data Value:",data)
+                print(result)
+            except Exception as e:
+                print(e)                
     
-            elif (opt == '3'):
-                lower = input("Please enter lower bound: \n")
-                upper = input("Please enter upper bound: \n")
-                assert(lower <= upper)
-                try:
-                    result = retrieve_pair_range(db, lower, upper)
-                    print("Result Found:",result)
-                except Exception as e:
-                    print(e)                      
+        elif (opt == '3'):
+            lower = input("Please enter lower bound: \n")
+            upper = input("Please enter upper bound: \n")
+            assert(lower <= upper)
+            try:
+                result = retrieve_pair_range(db, lower, upper)
+                print("Result Found:",result)
+            except Exception as e:
+                print(e)                      
                 
-            elif (opt == '4'):
-                sys.exit("Exiting database application. . .")
+        elif (opt == '4'):
                 
-            else:
-                os.system('clear')
-                print("Sorry " + opt + " is not a known option. \n")   
+            try:
+                db.close()
+            except Exception as e:
+                print (e)
+
+            sys.exit("Exiting database application. . .")
+                
+        else:
+            os.system('clear')
+            print("Sorry " + opt + " is not a known option. \n")   
                 
     #inserts and finds a specific value
     #test_key = "123"
