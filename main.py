@@ -163,7 +163,7 @@ def main():
         test_key = "125"
         test_key = test_key.encode(encoding='UTF-8')
         db[test_key] = "found me!" 
-        print(retrieve_pair_key(db, test_key))
+        #print(retrieve_pair_key(db, test_key))
 
         test_key = "124"
         test_key = test_key.encode(encoding='UTF-8')
@@ -208,8 +208,8 @@ def main():
                 print(e)                
     
         elif (opt == '3'):
-            lower = input("Please enter lower bound: \n")
-            upper = input("Please enter upper bound: \n")
+            lower = int(input("Please enter lower bound: \n"))
+            upper = int(input("Please enter upper bound: \n"))
             assert(lower <= upper)
             try: 
                 t3 = time.clock()
