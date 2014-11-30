@@ -157,19 +157,22 @@ def main():
             print (value)
             print ("")
             db[key] = value
+        #Don't do tests if using index!
+        #inserts and finds a specific value
+
+        test_key = "125"
+        test_key = test_key.encode(encoding='UTF-8')
+        db[test_key] = "found me!" 
+        print(retrieve_pair_key(db, test_key))
+
+        test_key = "124"
+        test_key = test_key.encode(encoding='UTF-8')
+        db[test_key] = "found me!"
     else:
         theIndex = index.index_file(DB_SIZE)
 
 
-    #inserts and finds a specific value
-    test_key = "125"
-    test_key = test_key.encode(encoding='UTF-8')
-    db[test_key] = "found me!" 
-    #print(retrieve_pair_key(db, test_key))
 
-    test_key = "124"
-    test_key = test_key.encode(encoding='UTF-8')
-    db[test_key] = "found me!"
  
     while (1):  
         print("Please press the corresponding number to select option.")
