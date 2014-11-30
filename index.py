@@ -1,10 +1,10 @@
 import bsddb3 as bsddb
 
-directory = "/tmp/my_db"
+#directory = "/tmp/my_db"
 
-DA_FILE1 = "/tmp/my_db/INDEX_DB_TREE"
-DA_FILE2 = "/tmp/my_db/INDEX_DB_HASH"
-DB_SIZE = 1000
+#DA_FILE1 = "/tmp/my_db/INDEX_DB_TREE"
+#DA_FILE2 = "/tmp/my_db/INDEX_DB_HASH"
+#DB_SIZE = 1000
 
 class index_file:
 

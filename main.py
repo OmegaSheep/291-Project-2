@@ -5,6 +5,7 @@ import os
 import bsddb3 as bsddb
 import random
 import time
+import index
 #Makes directory if it does not exist.
 directory = "/tmp/my_db"
 if not os.path.exists(directory):
@@ -136,10 +137,10 @@ def main():
             
     elif db_type_option == "indexfile":
         try:
-            db = bsddb.rnopen(DA_FILE, "w")
+            db = bsddb.rnopen(DA_FILE3, "w")
         except:
             print("DB doesn't exist, creating a new one.")
-            db = bsddb.rnopen(DA_FILE, "c")
+            db = bsddb.rnopen(DA_FILE3, "c")
             
     else:
         print("LOL you shouldn't be here.")
