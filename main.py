@@ -4,7 +4,7 @@ import sys, getopt
 import os
 import bsddb3 as bsddb
 import random
-
+import time
 #Makes directory if it does not exist.
 directory = "/tmp/my_db"
 if not os.path.exists(directory):
@@ -144,11 +144,6 @@ def main():
     else:
         print("LOL you shouldn't be here.")
         assert("You shall not pass." == potato)
-        try:
-            db = bsddb.btopen(DA_FILE, "w")
-        except:
-            print("DB doesn't exist, creating a new one.")
-            db = bsddb.btopen(DA_FILE, "c")
 
     random.seed(SEED)
 
@@ -183,11 +178,13 @@ def main():
         os.system('clear')
             
         if (opt == '1'):
+            
             key = str(input("Please enter key value: \n"))
-
             try:
+                t1 = time.clock()
                 result = retrieve_pair_key(db, key)
                 print("Result Found: "+str(result))
+                print("Time taken:",time.clock() - t1)
             except Exception as e:
                 print(e)
                 
@@ -195,9 +192,11 @@ def main():
             data = str(input("Please enter data value: \n"))
             #data = data.encode(encoding='UTF-8') 
             try:
+                t2 = time.clock()
                 result = retrieve_pair_data(db, data)
                 print("Result List for Data Value:",data)
                 print(result)
+                print("Time taken:",time.clock() - t2)
             except Exception as e:
                 print(e)                
     
@@ -205,9 +204,11 @@ def main():
             lower = input("Please enter lower bound: \n")
             upper = input("Please enter upper bound: \n")
             assert(lower <= upper)
-            try:
+            try: 
+                t3 = time.clock()
                 result = retrieve_pair_range(db, lower, upper)
                 print("Result Found:",result)
+                print("Time taken:",time.clock() - t3)
             except Exception as e:
                 print(e)                      
                 
