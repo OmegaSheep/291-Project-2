@@ -148,14 +148,17 @@ def main():
 
     random.seed(SEED)
 
-    #fills the database with stuff
-    for index in range(DB_SIZE):
-        key = generate_key()
-        value = generate_value()
-        print (key)
-        print (value)
-        print ("")
-        db[key] = value
+    #Need to behave differently for indexFile
+    if db_type_option != "indexfile":
+        for j in range(DB_SIZE):
+            key = generate_key()
+            value = generate_value()
+            print (key)
+            print (value)
+            print ("")
+            db[key] = value
+    else:
+        theIndex = index.index_file(DB_SIZE)
 
 
     #inserts and finds a specific value

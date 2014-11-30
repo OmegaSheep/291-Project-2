@@ -2,14 +2,16 @@ import bsddb3 as bsddb
 
 #directory = "/tmp/my_db"
 
-#DA_FILE1 = "/tmp/my_db/INDEX_DB_TREE"
-#DA_FILE2 = "/tmp/my_db/INDEX_DB_HASH"
+DA_FILE1 = "/tmp/my_db/INDEX_DB_TREE"
+DA_FILE2 = "/tmp/my_db/INDEX_DB_HASH"
 #DB_SIZE = 1000
 
 class index_file:
 
     def __init__(self, iterable):
         #Trys to open a database, if cant find, it will create it
+        self.iterable = iterable
+        print("Instantiating index file. . . ")
         try:
             self.db_tree = bsddb.btopen(DA_FILE1, "w")
         except:
@@ -23,7 +25,8 @@ class index_file:
             self.db_hash = bsddb.hashopen(DA_FILE2, "c")
 
     def retrieve_record_with_key(self,key):
-        self.db_tree[key]
+        #self.db_tree[key]
+        1+1
 
     def retrieve_record_with_data():
         1+1
