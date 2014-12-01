@@ -44,16 +44,19 @@ def generate_value():
 
 def retrieve_pair_key(db, key):
     #print("hello")
+    results = []
     key = key.encode(encoding='UTF-8')
     #key =
     try:
         #print (key,type(key))
         name = db[key]
-        return name
+        results.append(name)
+        #return name
         
     except:
         print (key + ", does not exist!")
 
+    return results
     #if db.has_key(key) == True:
     #    name = db[key]
     #    name = str(name)
@@ -191,6 +194,7 @@ def main():
                 t1 = time.clock()
                 result = retrieve_pair_key(db, key)
                 print("Result Found: "+str(result))
+                print("Number of records found: " +str(len(result)))
                 print("Time taken:",time.clock() - t1)
             except Exception as e:
                 print(e)
@@ -203,6 +207,7 @@ def main():
                 result = retrieve_pair_data(db, data)
                 print("Result List for Data Value:",data)
                 print(result)
+                print("Number of records found: " +str(len(result)))
                 print("Time taken:",time.clock() - t2)
             except Exception as e:
                 print(e)                
@@ -215,6 +220,7 @@ def main():
                 t3 = time.clock()
                 result = retrieve_pair_range(db, lower, upper)
                 print("Result Found:",result)
+                print("Number of records found: " +str(len(result)))
                 print("Time taken:",time.clock() - t3)
             except Exception as e:
                 print(e)                      
