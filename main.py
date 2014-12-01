@@ -149,45 +149,47 @@ def main():
         print("LOL you shouldn't be here.")
         assert("You shall not pass." == potato)
 
-    random.seed(SEED)
-
-    #Need to behave differently for indexFile
-    if db_type_option != "indexfile":
-        for j in range(DB_SIZE):
-            key = generate_key()
-            value = generate_value()
-            print (key)
-            print (value)
-            print ("")
-            db[key] = value
-        #Don't do tests if using index!
-        #inserts and finds a specific value
-
-        test_key = "125"
-        test_key = test_key.encode(encoding='UTF-8')
-        db[test_key] = "found me!" 
-        #print(retrieve_pair_key(db, test_key))
-
-        test_key = "124"
-        test_key = test_key.encode(encoding='UTF-8')
-        db[test_key] = "found me!"
-    else:
-        theIndex = index.index_file(DB_SIZE)
-
-
-
  
     while (1):  
         print("Please press the corresponding number to select option.")
-        print("[1]: Retrieve a record with a given key value.") 
-        print("[2]: Retrieve a list of records with a given data value.")
-        print("[3]: Retrieve a list of records with a given range of key values.")
-        print("[4]: Exit. ")            
+        print("[1]: Create and populate database")
+        print("[2]: Retrieve a record with a given key value.") 
+        print("[3]: Retrieve a list of records with a given data value.")
+        print("[4]: Retrieve a list of records with a given range of key values.")
+        print("[5]: Destroy Database")
+        print("[6]: Exit. ")            
                   
         opt = str(input("Input: \n"))
         os.system('clear')
-            
-        if (opt == '1'):
+
+        if(opt == '1'):          
+  
+            random.seed(SEED)
+
+            #Need to behave differently for indexFile
+            if db_type_option != "indexfile":
+                for j in range(DB_SIZE):
+                    key = generate_key()
+                    value = generate_value()
+                    print (key)
+                    print (value)
+                    print ("")
+                    db[key] = value
+                    #   Don't do tests if using index!
+                    #inserts and finds a specific value
+
+                    test_key = "125"
+                    test_key = test_key.encode(encoding='UTF-8')
+                    db[test_key] = "found me!" 
+                    #print(retrieve_pair_key(db, test_key))
+
+                    test_key = "124"
+                    test_key = test_key.encode(encoding='UTF-8')
+                    db[test_key] = "found me!"
+            else:
+                theIndex = index.index_file(DB_SIZE)
+
+        elif (opt == '2'):
             
             key = str(input("Please enter key value: \n"))
             try:
@@ -199,7 +201,7 @@ def main():
             except Exception as e:
                 print(e)
                 
-        elif (opt == '2'):
+        elif (opt == '3'):
             data = str(input("Please enter data value: \n"))
             #data = data.encode(encoding='UTF-8') 
             try:
@@ -212,7 +214,7 @@ def main():
             except Exception as e:
                 print(e)                
     
-        elif (opt == '3'):
+        elif (opt == '4'):
             lower = int(input("Please enter lower bound: \n"))
             upper = int(input("Please enter upper bound: \n"))
             assert(lower <= upper)
@@ -225,7 +227,7 @@ def main():
             except Exception as e:
                 print(e)                      
                 
-        elif (opt == '4'):
+        elif (opt == '6'):
                 
             try:
                 db.close()
