@@ -9,15 +9,15 @@ import index
 #used for removing directorys
 import shutil
 #Makes directory if it does not exist.
-directory = "/tmp/my_db"
+directory = "/tmp/curnow_db"
 
 if not os.path.exists(directory):
     os.makedirs(directory)
     #print(directory)
 #Assignment spec files.
-DA_FILE1 = "/tmp/my_db/DB_TREE"
-DA_FILE2 = "/tmp/my_db/DB_HASH"
-DA_FILE3 = "/tmp/my_db/DB_IndexFile"
+DA_FILE1 = "/tmp/curnow_db/DB_TREE"
+DA_FILE2 = "/tmp/curnow_db/DB_HASH"
+DA_FILE3 = "/tmp/curnow_db/DB_IndexFile"
 #Test file.
 DB_SIZE = 1000
 SEED = 10000000
