@@ -203,7 +203,7 @@ def main():
                 result = retrieve_pair_key(db, key)
                 print("Result Found: "+str(result))
                 print("Number of records found: " +str(len(result)))
-                print("Time taken:",time.clock() - t1)
+                print("Time taken:",(time.clock() - t1)*1000000)
             except Exception as e:
                 print(e)
                 
@@ -216,7 +216,7 @@ def main():
                 print("Result List for Data Value:",data)
                 print(result)
                 print("Number of records found: " +str(len(result)))
-                print("Time taken:",time.clock() - t2)
+                print("Time taken:",(time.clock() - t2)*1000000)
             except Exception as e:
                 print(e)                
     
@@ -229,7 +229,7 @@ def main():
                 result = retrieve_pair_range(db, lower, upper)
                 print("Result Found:",result)
                 print("Number of records found: " +str(len(result)))
-                print("Time taken:",time.clock() - t3)
+                print("Time taken:",(time.clock() - t3)*1000000)
             except Exception as e:
                 print(e)                      
                 
