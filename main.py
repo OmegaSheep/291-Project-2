@@ -6,11 +6,14 @@ import bsddb3 as bsddb
 import random
 import time
 import index
+#used for removing directorys
+import shutil
 #Makes directory if it does not exist.
 directory = "/tmp/my_db"
+
 if not os.path.exists(directory):
     os.makedirs(directory)
-
+    #print(directory)
 #Assignment spec files.
 DA_FILE1 = "/tmp/my_db/DB_TREE"
 DA_FILE2 = "/tmp/my_db/DB_HASH"
@@ -164,6 +167,9 @@ def main():
 
         if(opt == '1'):          
   
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+                #print(directory)
             random.seed(SEED)
 
             #Need to behave differently for indexFile
@@ -227,8 +233,17 @@ def main():
             except Exception as e:
                 print(e)                      
                 
+        elif (opt =='5'):
+            shutil.rmtree(directory)
+
+            try:
+                db.close()
+            except Exception as e:
+                print (e)
+
+        #removes database and stuff
         elif (opt == '6'):
-                
+            shutil.rmtree(directory) 
             try:
                 db.close()
             except Exception as e:
