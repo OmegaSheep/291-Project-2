@@ -24,8 +24,8 @@ SEED = 10000000
 def GIGA_PRINT(k, d):
     f = open('answers','a')
     f.write("\n")
-    f.write(k.decode(encoding='UTF-8')+"\n")
-    f.write(d.decode(encoding='UTF-8')+"\n")
+    #f.write(k.decode(encoding='UTF-8')+"\n")
+    #f.write(d.decode(encoding='UTF-8')+"\n")
     f.write("\n")
     f.close()
 
@@ -79,15 +79,28 @@ def retrieve_pair_key(db, key):
 def retrieve_pair_data(db, data):
     data = data.encode(encoding='UTF-8') 
     results = []
+    
+    #while (db.next() != db.last()):
+    #    print(db.next()[1])
+    #print(db.keys())
+
     try:
-        for i in range(DB_SIZE):
+        #for i in range(DB_SIZE):
+        for i in db.keys():
             #print(i)
-            key = str(i)
-            key = key.encode(encoding='UTF-8') 
+            #key = str(i)
+            #key = key.encode(encoding='UTF-8')
+            key = i
+            #print(i) 
             if (db.has_key(key) == True):
+                #print("hello!")
+                #print("found key!, db size:"+ str(key))
                 if (db[key] == data):
+                    print("fooo!")
                     results.append((i,data))
                     GIGA_PRINT(key,data)
+
+        #print(results)
         return results
     except Exception as e:
         print (e)
@@ -192,9 +205,9 @@ def main():
                 for j in range(DB_SIZE):
                     key = generate_key()
                     value = generate_value()
-                    #print (key)
-                    #print (value)
-                    #print ("")
+                    print (key)
+                    print (value)
+                    print ("")
                     db[key] = value
                     #   Don't do tests if using index!
                     #inserts and finds a specific value
@@ -204,29 +217,29 @@ def main():
                     db[test_key] = "found me!" 
                     #print(retrieve_pair_key(db, test_key))
 
-                    #test_key = "124"
-                    #test_key = test_key.encode(encoding='UTF-8')
-                    #db[test_key] = "found me!"
+                    test_key = "124"
+                    test_key = test_key.encode(encoding='UTF-8')
+                    db[test_key] = "found me!"
             else:
                 theIndex = index.index_file(DB_SIZE)
                 x = theIndex.get_size()
 
-                #test_key = "125"
-                #test_key = test_key.encode(encoding='UTF-8')
-                #theIndex.db_tree[test_key] = "found me!"
+                test_key = "125"
+                test_key = test_key.encode(encoding='UTF-8')
+                theIndex.db_tree[test_key] = "found me!"
 
-                #test_key = "124"
-                #test_key = test_key.encode(encoding='UTF-8')
-                #theIndex.db_hash[b'found me!'] = "124"
+                test_key = "124"
+                test_key = test_key.encode(encoding='UTF-8')
+                theIndex.db_hash[b'found me!'] = "124"
 
                 keyL = []
                 dataL = []
                 for i in range(x):
                     key = generate_key()
                     value = generate_value()
-                    #print ("Key:",key)
-                    #print ("Value",value)
-                    #print ("")
+                    print ("Key:",key)
+                    print ("Value",value)
+                    print ("")
                     if (key in keyL or value in dataL):
                         print("Skipping value due to duplicate key/data.")
 
