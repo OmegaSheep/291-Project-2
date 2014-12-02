@@ -2,9 +2,8 @@ import bsddb3 as bsddb
 
 #directory = "/tmp/my_db"
 
-DA_FILE1 = "/tmp/my_db/INDEX_DB_TREE"
-DA_FILE2 = "/tmp/my_db/INDEX_DB_HASH"
-#DB_SIZE = 1000
+DA_FILE1 = "/tmp/curnow_db/INDEX_DB_TREE"
+DA_FILE2 = "/tmp/curnow_db/INDEX_DB_HASH"
 
 class index_file:
 
@@ -24,13 +23,57 @@ class index_file:
             print("DB doesn't exist, creating a new one.")
             self.db_hash = bsddb.hashopen(DA_FILE2, "c")
 
+    def get_size(self):
+        return self.iterable
+
     def retrieve_record_with_key(self,key):
-        #self.db_tree[key]
-        1+1
+        results = []
+        self.key = key.encode(encoding='UTF-8')
+        try:
+            name = self.db_tree[self.key]
+            results.append(name)
+            
+        except:
+            1+1
+            #Do nothing! Nothing!
 
-    def retrieve_record_with_data():
-        1+1
+        if (results != None):
+            return results
+        else:
+            return
 
-    def retrieve_record_with_key_range():
-        1+1
+    def retrieve_record_with_data(self, data):
+        #self.data = data;
+        results = []
+        self.data = data.encode(encoding='UTF-8')
+        try:
+            name = self.db_hash[self.data]
+            results.append(name)
+            
+        except:
+            1+1
+            #Do nothing! Nothing!
+
+        if (results != None):
+            return results
+        else:
+            return
+
+
+    def retrieve_record_with_key_range(self, lower, upper):
+        results = []
+        lower = int(lower)
+        upper = int(upper)
+        try:
+            #assert(upper <= DB_SIZE)
+            for i in range(lower, upper):
+                self.key = str(i)
+                self.key = self.key.encode(encoding='UTF-8')
+                if (self.db_tree.has_key(self.key) == True):
+                    #print("hi")
+                    #if (db[i] == data):
+                    results.append((self.key,self.db_tree[self.key]))
+            return results
+        except Exception as e:
+            print (e)
             

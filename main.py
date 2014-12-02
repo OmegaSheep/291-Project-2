@@ -57,9 +57,12 @@ def retrieve_pair_key(db, key):
         #return name
         
     except:
-        print (key + ", does not exist!")
-
-    return results
+        1+1
+        #Do nothing! Nothing!
+    if (results != None):
+        return results
+    else:
+        return
     #if db.has_key(key) == True:
     #    name = db[key]
     #    name = str(name)
@@ -98,6 +101,7 @@ def retrieve_pair_range(db, lower, upper):
         return results
     except Exception as e:
         print (e)
+
 
 def main():
     
@@ -177,9 +181,9 @@ def main():
                 for j in range(DB_SIZE):
                     key = generate_key()
                     value = generate_value()
-                    print (key)
-                    print (value)
-                    print ("")
+                    #print (key)
+                    #print (value)
+                    #print ("")
                     db[key] = value
                     #   Don't do tests if using index!
                     #inserts and finds a specific value
@@ -194,56 +198,122 @@ def main():
                     db[test_key] = "found me!"
             else:
                 theIndex = index.index_file(DB_SIZE)
+                x = theIndex.get_size()
+
+                test_key = "125"
+                test_key = test_key.encode(encoding='UTF-8')
+                theIndex.db_tree[test_key] = "found me!"
+
+                test_key = "124"
+                test_key = test_key.encode(encoding='UTF-8')
+                theIndex.db_hash[b'found me!'] = "124"
+
+                for i in range(x):
+                    key = generate_key()
+                    value = generate_value()
+                    print ("Key:",key)
+                    print ("Value",value)
+                    print ("")
+                    theIndex.db_tree[key] = value
+                    #theIndex.db_hash.
+                    theIndex.db_hash[value] = key
+
+               
+
+
 
         elif (opt == '2'):
-            
-            key = str(input("Please enter key value: \n"))
-            try:
-                t1 = time.clock()
-                result = retrieve_pair_key(db, key)
-                print("Result Found: "+str(result))
-                print("Number of records found: " +str(len(result)))
-                print("Time taken:",(time.clock() - t1)*1000000)
-            except Exception as e:
-                print(e)
+            if (db_type_option != "indexfile"):
+                key = str(input("Please enter key value: \n"))
+                try:
+                    t1 = time.clock()
+                    result = retrieve_pair_key(db, key)
+                    print("Result Found: "+str(result))
+                    print("Number of records found: " +str(len(result)))
+                    print("Time taken:",(time.clock() - t1)*1000000," microseconds")
+                except Exception as e:
+                    print(e)
+
+            else:
+                key = str(input("Please enter key value: \n"))
+                try:
+                    t1 = time.clock()
+                    result = theIndex.retrieve_record_with_key(key)
+                    print("Result Found: "+str(result))
+                    print("Number of records found: " +str(len(result)))
+                    print("Time taken:",(time.clock() - t1)*1000000," microseconds")
+                except Exception as e:
+                    print(e)
+
                 
         elif (opt == '3'):
-            data = str(input("Please enter data value: \n"))
-            #data = data.encode(encoding='UTF-8') 
-            try:
-                t2 = time.clock()
-                result = retrieve_pair_data(db, data)
-                print("Result List for Data Value:",data)
-                print(result)
-                print("Number of records found: " +str(len(result)))
-                print("Time taken:",(time.clock() - t2)*1000000)
-            except Exception as e:
-                print(e)                
+            if (db_type_option != "indexfile"):
+                data = str(input("Please enter data value: \n"))
+                #data = data.encode(encoding='UTF-8') 
+                try:
+                    t2 = time.clock()
+                    result = retrieve_pair_data(db, data)
+                    print("Result List for Data Value:",data)
+                    print(result)
+                    print("Number of records found: " +str(len(result)))
+                    print("Time taken:",(time.clock() - t2)*1000000," microseconds")
+                except Exception as e:
+                    print(e)
+
+            else:
+                data = str(input("Please enter data value: \n"))
+                #data = data.encode(encoding='UTF-8') 
+                try:
+                    t2 = time.clock()
+                    result = theIndex.retrieve_record_with_data(data)
+                    print("Result List for Data Value:",data)
+                    print(result)
+                    print("Number of records found: " +str(len(result)))
+                    print("Time taken:",(time.clock() - t2)*1000000," microseconds")
+                except Exception as e:
+                    print(e)           
     
         elif (opt == '4'):
-            lower = int(input("Please enter lower bound: \n"))
-            upper = int(input("Please enter upper bound: \n"))
-            assert(lower <= upper)
-            try: 
-                t3 = time.clock()
-                result = retrieve_pair_range(db, lower, upper)
-                print("Result Found:",result)
-                print("Number of records found: " +str(len(result)))
-                print("Time taken:",(time.clock() - t3)*1000000)
-            except Exception as e:
-                print(e)                      
+            if (db_type_option != "indexfile"):
+                lower = int(input("Please enter lower bound: \n"))
+                upper = int(input("Please enter upper bound: \n"))
+                assert(lower <= upper)
+                try: 
+                    t3 = time.clock()
+                    result = retrieve_pair_range(db, lower, upper)
+                    print("Result Found:",result)
+                    print("Number of records found: " +str(len(result)))
+                    print("Time taken:",(time.clock() - t3)*1000000," microseconds")
+                except Exception as e:
+                    print(e)
+
+            else:
+                lower = int(input("Please enter lower bound: \n"))
+                upper = int(input("Please enter upper bound: \n"))
+                assert(lower <= upper)
+                try: 
+                    t3 = time.clock()
+                    result = theIndex.retrieve_record_with_key_range(lower, upper)
+                    print("Result Found:",result)
+                    print("Number of records found: " +str(len(result)))
+                    print("Time taken:",(time.clock() - t3)*1000000," microseconds")
+                except Exception as e:
+                    print(e)
+
                 
         elif (opt =='5'):
             shutil.rmtree(directory)
 
             try:
+                shutil.rmtree(directory)
                 db.close()
             except Exception as e:
                 print (e)
+                print("Exiting. . . ")
 
         #removes database and stuff
         elif (opt == '6'):
-            shutil.rmtree(directory) 
+            #shutil.rmtree(directory) 
             try:
                 db.close()
             except Exception as e:
