@@ -1,9 +1,10 @@
 import bsddb3 as bsddb
-
+import output
 #directory = "/tmp/my_db"
 
 DA_FILE1 = "/tmp/curnow_db/INDEX_DB_TREE"
 DA_FILE2 = "/tmp/curnow_db/INDEX_DB_HASH"
+
 
 class index_file:
 
@@ -76,7 +77,11 @@ class index_file:
                     #print("hi")
                     #if (db[i] == data):
                     results.append((self.key,self.db_tree[self.key]))
-            return results
+            if (len(results) > 0):
+                return results
+            else:
+                return False
+                
         except Exception as e:
             print (e)
             

@@ -6,11 +6,11 @@ import bsddb3 as bsddb
 import random
 import time
 import index
+import output
 #used for removing directorys
 import shutil
 #Makes directory if it does not exist.
 directory = "/tmp/curnow_db"
-
 if not os.path.exists(directory):
     os.makedirs(directory)
     #print(directory)
@@ -21,6 +21,13 @@ DA_FILE3 = "/tmp/curnow_db/DB_IndexFile"
 #Test file.
 DB_SIZE = 1000
 SEED = 10000000
+def GIGA_PRINT(k, d):
+    f = open('answers','a')
+    f.write("\n")
+    f.write(k.decode(encoding='UTF-8')+"\n")
+    f.write(d.decode(encoding='UTF-8')+"\n")
+    f.write("\n")
+    f.close()
 
 def get_random():
     return random.randint(0, 63)
@@ -59,7 +66,8 @@ def retrieve_pair_key(db, key):
     except:
         1+1
         #Do nothing! Nothing!
-    if (results != None):
+    if (results != None): 
+        GIGA_PRINT(key,name)
         return results
     else:
         return
@@ -79,7 +87,7 @@ def retrieve_pair_data(db, data):
             if (db.has_key(key) == True):
                 if (db[key] == data):
                     results.append((i,data))
-                    1+1
+                    GIGA_PRINT(key,data)
         return results
     except Exception as e:
         print (e)
@@ -89,6 +97,8 @@ def retrieve_pair_range(db, lower, upper):
     results = []
     lower = int(lower)
     upper = int(upper)
+    if (upper > DB_SIZE):
+        upper = DB_SIZE
     try:
         #assert(upper <= DB_SIZE)
         for i in range(lower, upper):
@@ -98,6 +108,7 @@ def retrieve_pair_range(db, lower, upper):
                 #print("hi")
                 #if (db[i] == data):
                 results.append((key,db[key]))
+                GIGA_PRINT(key,db[key])
         return results
     except Exception as e:
         print (e)
@@ -188,9 +199,9 @@ def main():
                     #   Don't do tests if using index!
                     #inserts and finds a specific value
 
-                    #test_key = "125"
-                    #test_key = test_key.encode(encoding='UTF-8')
-                    #db[test_key] = "found me!" 
+                    test_key = "125"
+                    test_key = test_key.encode(encoding='UTF-8')
+                    db[test_key] = "found me!" 
                     #print(retrieve_pair_key(db, test_key))
 
                     #test_key = "124"
@@ -242,6 +253,8 @@ def main():
                 try:
                     t1 = time.clock()
                     result = theIndex.retrieve_record_with_key(key)
+                    if (result != False):
+                        GIGA_PRINT(key,result)
                     print("Result Found: "+str(result))
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t1)*1000000," microseconds")
@@ -269,6 +282,8 @@ def main():
                 try:
                     t2 = time.clock()
                     result = theIndex.retrieve_record_with_data(data)
+                    if (result != False):
+                        GIGA_PRINT(result,data)
                     print("Result List for Data Value:",data)
                     print(result)
                     print("Number of records found: " +str(len(result)))
@@ -297,6 +312,9 @@ def main():
                 try: 
                     t3 = time.clock()
                     result = theIndex.retrieve_record_with_key_range(lower, upper)
+                    if (len(result) > 0):
+                        for i in result:
+                            GIGA_PRINT(i[0],i[1])
                     print("Result Found:",result)
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t3)*1000000," microseconds")
@@ -318,7 +336,8 @@ def main():
         elif (opt == '6'):
             #shutil.rmtree(directory) 
             try:
-                db.close()
+                db.close() 
+                os.system('rm answers -f')
             except Exception as e:
                 print (e)
 
