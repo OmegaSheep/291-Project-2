@@ -40,7 +40,7 @@ class index_file:
         if (results != None):
             return results
         else:
-            return
+            return False
 
     def retrieve_record_with_data(self, data):
         #self.data = data;
@@ -57,13 +57,16 @@ class index_file:
         if (results != None):
             return results
         else:
-            return
+            return False
 
 
     def retrieve_record_with_key_range(self, lower, upper):
         results = []
         lower = int(lower)
         upper = int(upper)
+        if (upper > self.iterable):
+            upper = self.iterable
+
         try:
             #assert(upper <= DB_SIZE)
             for i in range(lower, upper):
