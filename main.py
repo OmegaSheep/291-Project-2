@@ -108,18 +108,24 @@ def retrieve_pair_data(db, data):
 
 def retrieve_pair_range(db, lower, upper):
     results = []
-    lower = int(lower)
-    upper = int(upper)
-    if (upper > DB_SIZE):
-        upper = DB_SIZE
+    #lower = int(lower)
+    #upper = int(upper)
+    #if (upper > DB_SIZE):
+    #    upper = DB_SIZE
+
+    #print(lower,upper)
     try:
-        #assert(upper <= DB_SIZE)
-        for i in range(lower, upper):
-            key = str(i)
-            key = key.encode(encoding='UTF-8')
-            if (db.has_key(key) == True):
+        #assert(upper >= lower)
+        for i in db.keys():
+            key = i.decode("utf-8")
+            #key = i
+            #print(key)
+            #key = key.encode(encoding='UTF-8')
+            if (key < upper and key > lower):
+
                 #print("hi")
                 #if (db[i] == data):
+                key = i
                 results.append((key,db[key]))
                 GIGA_PRINT(key,db[key])
         return results
@@ -306,8 +312,8 @@ def main():
     
         elif (opt == '4'):
             if (db_type_option != "indexfile"):
-                lower = int(input("Please enter lower bound: \n"))
-                upper = int(input("Please enter upper bound: \n"))
+                lower = str(input("Please enter lower bound: \n"))
+                upper = str(input("Please enter upper bound: \n"))
                 assert(lower <= upper)
                 try: 
                     t3 = time.clock()
