@@ -21,11 +21,19 @@ DA_FILE3 = "/tmp/curnow_db/DB_IndexFile"
 #Test file.
 DB_SIZE = 1000
 SEED = 10000000
-def GIGA_PRINT(k, d):
+#f means to decode or not
+def GIGA_PRINT(k, d, f=0):
     f = open('answers','a')
     f.write("\n")
-    #f.write(k.decode(encoding='UTF-8')+"\n")
-    #f.write(d.decode(encoding='UTF-8')+"\n")
+
+    #key = i.decode("utf-8")
+    #if f == 0:
+    f.write(k.decode('UTF-8')+"\n")
+    f.write(d.decode('UTF-8')+"\n")
+    #else:
+    #f.write(k+"\n")
+    #f.write(d+"\n")
+
     f.write("\n")
     f.close()
 
@@ -272,8 +280,11 @@ def main():
                 try:
                     t1 = time.clock()
                     result = theIndex.retrieve_record_with_key(key)
-                    if (result != False):
-                        GIGA_PRINT(key,result)
+                    #if (result != False):
+                        #print(result)
+                        #print(key)
+                        #GIGA_PRINT(key,result,1)
+
                     print("Result Found: "+str(result))
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t1)*1000000," microseconds")
@@ -301,8 +312,8 @@ def main():
                 try:
                     t2 = time.clock()
                     result = theIndex.retrieve_record_with_data(data)
-                    if (result != False):
-                        GIGA_PRINT(result,data)
+                    #if (result != False):
+                        #GIGA_PRINT(result,data)
                     print("Result List for Data Value:",data)
                     print(result)
                     print("Number of records found: " +str(len(result)))
