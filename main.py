@@ -96,7 +96,7 @@ def retrieve_pair_data(db, data):
                 #print("hello!")
                 #print("found key!, db size:"+ str(key))
                 if (db[key] == data):
-                    print("fooo!")
+                    #print("fooo!")
                     results.append((i,data))
                     GIGA_PRINT(key,data)
 
@@ -325,15 +325,15 @@ def main():
                     print(e)
 
             else:
-                lower = int(input("Please enter lower bound: \n"))
-                upper = int(input("Please enter upper bound: \n"))
+                lower = str(input("Please enter lower bound: \n"))
+                upper = str(input("Please enter upper bound: \n"))
                 assert(lower <= upper)
                 try: 
                     t3 = time.clock()
                     result = theIndex.retrieve_record_with_key_range(lower, upper)
-                    if (len(result) > 0):
-                        for i in result:
-                            GIGA_PRINT(i[0],i[1])
+                    #if (len(result) > 0):
+                    #    for i in result:
+                    #        GIGA_PRINT(i[0],i[1])
                     print("Result Found:",result)
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t3)*1000000," microseconds")

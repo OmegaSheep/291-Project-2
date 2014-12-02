@@ -63,25 +63,26 @@ class index_file:
 
     def retrieve_record_with_key_range(self, lower, upper):
         results = []
-        lower = int(lower)
-        upper = int(upper)
-        if (upper > self.iterable):
-            upper = self.iterable
+        #lower = int(lower)
+        #upper = int(upper)
+        #if (upper > DB_SIZE):
+        #    upper = DB_SIZE
 
+        #print(lower,upper)
         try:
-            #assert(upper <= DB_SIZE)
-            for i in range(lower, upper):
-                self.key = str(i)
-                self.key = self.key.encode(encoding='UTF-8')
-                if (self.db_tree.has_key(self.key) == True):
+            #assert(upper >= lower)
+            for i in self.db_tree.keys():
+                key = i.decode("utf-8")
+                #key = i
+                #print(key)
+                #key = key.encode(encoding='UTF-8')
+                if (key < upper and key > lower):
+
                     #print("hi")
                     #if (db[i] == data):
-                    results.append((self.key,self.db_tree[self.key]))
-            if (len(results) > 0):
-                return results
-            else:
-                return False
-                
+                    key = i
+                    results.append((key,self.db_tree[key]))
+                    #GIGA_PRINT(key,self.db_tree[key])
+            return results
         except Exception as e:
             print (e)
-            
