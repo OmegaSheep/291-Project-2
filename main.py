@@ -19,7 +19,7 @@ DA_FILE1 = "/tmp/curnow_db/DB_TREE"
 DA_FILE2 = "/tmp/curnow_db/DB_HASH"
 DA_FILE3 = "/tmp/curnow_db/DB_IndexFile"
 #Test file.
-DB_SIZE = 100
+DB_SIZE = 100000
 SEED = 10000000
 #f means to decode or not
 def GIGA_PRINT(k, d, f=0):
