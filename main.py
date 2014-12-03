@@ -19,7 +19,7 @@ DA_FILE1 = "/tmp/curnow_db/DB_TREE"
 DA_FILE2 = "/tmp/curnow_db/DB_HASH"
 DA_FILE3 = "/tmp/curnow_db/DB_IndexFile"
 #Test file.
-DB_SIZE = 1000
+DB_SIZE = 100
 SEED = 10000000
 #f means to decode or not
 def GIGA_PRINT(k, d, f=0):
@@ -142,7 +142,7 @@ def retrieve_pair_range(db, lower, upper):
 
 
 def main():
-    
+    flag = False
     arg = "\n".join(sys.argv)
     #print(arg)
     #gets last word of argument string (it should be hash or betree
@@ -208,7 +208,7 @@ def main():
         os.system('clear')
 
         if(opt == '1'):          
-  
+            flag = True
             if not os.path.exists(directory):
                 os.makedirs(directory)
                 #print(directory)
@@ -226,25 +226,26 @@ def main():
                     #   Don't do tests if using index!
                     #inserts and finds a specific value
 
-                    test_key = "125"
-                    test_key = test_key.encode(encoding='UTF-8')
-                    db[test_key] = "found me!" 
+                    #test_key = "125"
+                    #test_key = test_key.encode(encoding='UTF-8')
+                    #db[test_key] = "found me!" 
                     #print(retrieve_pair_key(db, test_key))
 
-                    test_key = "124"
-                    test_key = test_key.encode(encoding='UTF-8')
-                    db[test_key] = "found me!"
+                    #test_key = "124"
+                    #test_key = test_key.encode(encoding='UTF-8')
+                    #db[test_key] = "found me!"
             else:
+                flag = True
                 theIndex = index.index_file(DB_SIZE)
                 x = theIndex.get_size()
 
-                test_key = "125"
-                test_key = test_key.encode(encoding='UTF-8')
-                theIndex.db_tree[test_key] = "found me!"
+                #test_key = "125"
+                #test_key = test_key.encode(encoding='UTF-8')
+                #theIndex.db_tree[test_key] = "found me!"
 
-                test_key = "124"
-                test_key = test_key.encode(encoding='UTF-8')
-                theIndex.db_hash[b'found me!'] = "124"
+                #test_key = "124"
+                #test_key = test_key.encode(encoding='UTF-8')
+                #theIndex.db_hash[b'found me!'] = "124"
 
                 keyL = []
                 dataL = []
@@ -264,6 +265,9 @@ def main():
                         theIndex.db_tree[key] = value  
 
         elif (opt == '2'):
+            if (flag != True):
+                print("Create database before searching.")
+                continue
             if (db_type_option != "indexfile"):
                 key = str(input("Please enter key value: \n"))
                 try:
@@ -293,6 +297,9 @@ def main():
 
                 
         elif (opt == '3'):
+            if (flag != True):
+                print("Create database before searching.")
+                continue            
             if (db_type_option != "indexfile"):
                 data = str(input("Please enter data value: \n"))
                 #data = data.encode(encoding='UTF-8') 
@@ -322,6 +329,9 @@ def main():
                     print(e)           
     
         elif (opt == '4'):
+            if (flag != True):
+                print("Create database before searching.")
+                continue            
             if (db_type_option != "indexfile"):
                 lower = str(input("Please enter lower bound: \n"))
                 upper = str(input("Please enter upper bound: \n"))
@@ -364,7 +374,7 @@ def main():
 
         #removes database and stuff
         elif (opt == '6'):
-            #shutil.rmtree(directory) 
+            shutil.rmtree(directory) 
             try:
                 db.close() 
                 os.system('rm answers -f')
