@@ -19,7 +19,7 @@ DA_FILE1 = "/tmp/curnow_db/DB_TREE"
 DA_FILE2 = "/tmp/curnow_db/DB_HASH"
 DA_FILE3 = "/tmp/curnow_db/DB_IndexFile"
 #Test file.
-DB_SIZE = 100000
+DB_SIZE = 1000
 SEED = 10000000
 #f means to decode or not
 def GIGA_PRINT(k, d, f=0):
@@ -277,7 +277,7 @@ def main():
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t1)*1000000," microseconds")
                 except Exception as e:
-                    print(e)
+                    print("No results found.")
 
             else:
                 key = str(input("Please enter key value: \n"))
@@ -293,7 +293,7 @@ def main():
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t1)*1000000," microseconds")
                 except Exception as e:
-                    print(e)
+                    print("No results found.")
 
                 
         elif (opt == '3'):
@@ -311,7 +311,7 @@ def main():
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t2)*1000000," microseconds")
                 except Exception as e:
-                    print(e)
+                    print("No results found.")
 
             else:
                 data = str(input("Please enter data value: \n"))
@@ -326,7 +326,7 @@ def main():
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t2)*1000000," microseconds")
                 except Exception as e:
-                    print(e)           
+                    print("No results found.")           
     
         elif (opt == '4'):
             if (flag != True):
@@ -343,7 +343,7 @@ def main():
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t3)*1000000," microseconds")
                 except Exception as e:
-                    print(e)
+                    print("No results found.")
 
             else:
                 lower = str(input("Please enter lower bound: \n"))
@@ -359,7 +359,7 @@ def main():
                     print("Number of records found: " +str(len(result)))
                     print("Time taken:",(time.clock() - t3)*1000000," microseconds")
                 except Exception as e:
-                    print(e)
+                    print("No results found.")                    
 
                 
         elif (opt =='5'):
