@@ -26,7 +26,7 @@ class index_file:
     def __init__(self, iterable):
         #Trys to open a database, if cant find, it will create it
         self.iterable = iterable
-        print("Instantiating index file. . . ")
+        print("Instantiating index file. . . [May take up to several minutes]")
         try:
             self.db_tree = bsddb.btopen(DA_FILE1, "w")
         except:
